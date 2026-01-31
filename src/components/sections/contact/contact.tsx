@@ -18,13 +18,19 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const message = `Hola! Me llamo ${formData.name}. 
-Tipo de evento: ${formData.eventType}
-Email: ${formData.email}
-Teléfono: ${formData.phone}
-Mensaje: ${formData.message}`;
+    const message = `¡Hola Tuna Sabana! 🎶
 
-    const whatsappUrl = `${siteConfig.links.whatsapp}?text=${encodeURIComponent(message)}`;
+Me gustaría recibir una cotización para un evento tipo *${formData.eventType}*.
+
+Soy *${formData.name}* y mis datos de contacto son:
+📞 ${formData.phone}
+📧 ${formData.email}
+
+📝 *Detalles del evento:*
+${formData.message}`;
+
+    const phoneNumber = siteConfig.contact.phone.replace(/\D/g, "");
+    const whatsappUrl = `https://api.whatsapp.com/send/?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, "_blank");
   };
 

@@ -1,5 +1,6 @@
-import { Instagram, Users } from "lucide-react";
+import { Users } from "lucide-react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button-variants";
 import TunoCard from "@/components/ui/tuno-card";
@@ -15,23 +16,34 @@ export const metadata: Metadata = {
 };
 
 export default function TunosPage() {
-  const tunosWithImage = tunos.filter((t) => t.image && t.image.length > 0);
-
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-primary text-primary-foreground py-16 lg:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="relative py-20 lg:py-32 overflow-hidden min-h-[40vh] flex items-center justify-center bg-primary">
+        {/* Background Image */}
+        <div className="absolute inset-0 w-full h-full">
+          <Image
+            src="/hero.jpg"
+            alt="Tuna Universidad de La Sabana"
+            fill
+            className="object-cover opacity-40 mix-blend-overlay"
+            priority
+            quality={75}
+          />
+          <div className="absolute inset-0 bg-linear-to-b from-primary/90 to-primary/80" />
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center space-y-6">
             <div className="flex justify-center">
-              <div className="w-20 h-20 rounded-full bg-accent/20 flex items-center justify-center">
+              <div className="w-20 h-20 rounded-full bg-accent/20 flex items-center justify-center backdrop-blur-sm border border-accent/10">
                 <Users className="w-10 h-10 text-accent" />
               </div>
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-balance">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-balance drop-shadow-lg text-primary-foreground">
               Nuestros Tunos
             </h1>
-            <p className="text-xl text-primary-foreground/90 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-xl text-primary-foreground/90 leading-relaxed max-w-2xl mx-auto drop-shadow-md">
               Conoce a los estudiantes y egresados apasionados que conforman la
               Tuna Universidad de La Sabana.
             </p>
@@ -44,14 +56,12 @@ export default function TunosPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
             <div className="text-center">
-              <p className="text-3xl font-bold text-accent">+{tunos.length}</p>
-              <p className="text-muted-foreground">Integrantes</p>
+              <p className="text-3xl font-bold text-accent">{tunos.length}</p>
+              <p className="text-muted-foreground">Tunos</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-accent">
-                {tunosWithImage.length}
-              </p>
-              <p className="text-muted-foreground">Con foto</p>
+              <p className="text-3xl font-bold text-accent">+ 50</p>
+              <p className="text-muted-foreground">Integrantes</p>
             </div>
             <div className="text-center">
               <p className="text-3xl font-bold text-accent">+7</p>
@@ -102,7 +112,7 @@ export default function TunosPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <Link
-                href="/#contact"
+                href="/contacto"
                 className={buttonVariants({
                   size: "lg",
                   className:
@@ -122,35 +132,15 @@ export default function TunosPage() {
                     "border-secondary-foreground text-secondary-foreground hover:bg-secondary-foreground hover:text-secondary bg-transparent gap-2",
                 })}
               >
-                <Instagram className="w-4 h-4" />
+                <Image
+                  src="/icons/instagram.svg"
+                  alt="Instagram"
+                  width={16}
+                  height={16}
+                />
                 Síguenos en Instagram
               </a>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Serenata CTA */}
-      <section className="py-16 lg:py-24 bg-accent text-accent-foreground">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center space-y-6">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-balance">
-              Contrata una Serenata
-            </h2>
-            <p className="text-lg text-accent-foreground/90">
-              Sorprende a esa persona especial con una serenata inolvidable de
-              la Tuna Sabana.
-            </p>
-            <Link
-              href="/#contact"
-              className={buttonVariants({
-                size: "lg",
-                className:
-                  "bg-primary text-primary-foreground hover:bg-primary/90",
-              })}
-            >
-              Cotizar Ahora
-            </Link>
           </div>
         </div>
       </section>

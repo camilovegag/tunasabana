@@ -1,4 +1,5 @@
 import { Building2, GraduationCap, Heart, PartyPopper } from "lucide-react";
+import Link from "next/link";
 import SectionHeader from "@/components/section-header";
 import ServiceCard from "@/components/service-card";
 import { siteConfig } from "@/config/site";
@@ -77,14 +78,12 @@ export default function Services() {
           <p className="text-muted-foreground mb-4">
             ¿Tienes algo diferente en mente?
           </p>
-          <a
-            href={siteConfig.links.whatsapp}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href="/contacto"
             className="inline-flex items-center justify-center rounded-md border-2 border-foreground bg-transparent text-foreground px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-colors"
           >
             ¡Contáctanos!
-          </a>
+          </Link>
         </div>
       </div>
     </section>

@@ -96,7 +96,8 @@ export const tunos: Tuno[] = [
     id: 12,
     name: "† Enrique Cristancho Hoyos",
     nickname: "Kike",
-    image: "",
+    image:
+      "https://drive.google.com/uc?export=view&id=14UN3VNTTVZI9AEFSqswtY_Tk8MQ7OBPU",
     instrument: "Guitarra",
   },
   {
