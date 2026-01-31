@@ -51,6 +51,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -64,7 +67,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${playfairDisplay.variable} antialiased`}
       >
         <Header />
-        <main className="py-40 px-8 min-h-dvh">{children}</main>
+        <main>{children}</main>
         <Footer />
       </body>
     </html>
