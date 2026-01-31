@@ -1,0 +1,218 @@
+"use client";
+
+import { Mail, MapPin, Phone, Send } from "lucide-react";
+import type React from "react";
+import { useState } from "react";
+import ContactInfoCard from "@/components/contact-info-card";
+import SectionHeader from "@/components/section-header";
+import { siteConfig } from "@/config/site";
+
+export default function Contact() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    eventType: "",
+    message: "",
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const message = `Hola! Me llamo ${formData.name}. 
+Tipo de evento: ${formData.eventType}
+Email: ${formData.email}
+Teléfono: ${formData.phone}
+Mensaje: ${formData.message}`;
+
+    const whatsappUrl = `${siteConfig.links.whatsapp}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  return (
+    <section id="contact" className="py-20 lg:py-32 bg-background">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <SectionHeader
+          title="¿Quieres una Serenata de la Tuna?"
+          subtitle="No lo pienses más, escríbenos ahora mismo y te responderemos en el menor tiempo posible"
+        />
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto">
+          {/* Contact Info */}
+          <div className="space-y-6 sm:space-y-8">
+            <div>
+              <h3 className="text-xl sm:text-2xl font-sans font-bold text-foreground mb-6">
+                Información de Contacto
+              </h3>
+              <div className="space-y-4">
+                <ContactInfoCard icon={Phone} title="Teléfono / WhatsApp">
+                  <a
+                    href={`tel:${siteConfig.contact.phone}`}
+                    className="hover:text-accent transition-colors"
+                  >
+                    {siteConfig.contact.phone}
+                  </a>
+                </ContactInfoCard>
+
+                <ContactInfoCard icon={Mail} title="Correo Electrónico">
+                  <a
+                    href={`mailto:${siteConfig.contact.email}`}
+                    className="hover:text-accent transition-colors"
+                  >
+                    {siteConfig.contact.email}
+                  </a>
+                </ContactInfoCard>
+
+                <ContactInfoCard icon={MapPin} title="Ubicación">
+                  <span>
+                    Universidad de La Sabana
+                    <br />
+                    Chía, Cundinamarca, Colombia
+                  </span>
+                </ContactInfoCard>
+              </div>
+            </div>
+
+            <div className="bg-accent/10 p-6 rounded-lg">
+              <h4 className="font-semibold text-foreground mb-3">
+                ¿Por qué elegirnos?
+              </h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>✓ Más de 25 años de experiencia</li>
+                <li>✓ Repertorio amplio y personalizable</li>
+                <li>✓ Puntualidad y profesionalismo garantizado</li>
+                <li>✓ Mejor relación calidad-precio</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Contact Form */}
+          <div className="order-first lg:order-0">
+            <h3 className="text-xl sm:text-2xl font-sans font-bold text-foreground mb-6">
+              Solicita tu Cotización
+            </h3>
+            <div className="bg-card p-6 sm:p-8 rounded-lg border border-border">
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-foreground mb-2"
+                  >
+                    Nombre Completo *
+                  </label>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    required
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Tu nombre"
+                    className="w-full rounded-md border border-border bg-background px-4 py-2 text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-foreground mb-2"
+                  >
+                    Correo Electrónico *
+                  </label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="tu@email.com"
+                    className="w-full rounded-md border border-border bg-background px-4 py-2 text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="phone"
+                    className="block text-sm font-medium text-foreground mb-2"
+                  >
+                    Teléfono / WhatsApp *
+                  </label>
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    required
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder="+57 300 123 4567"
+                    className="w-full rounded-md border border-border bg-background px-4 py-2 text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="eventType"
+                    className="block text-sm font-medium text-foreground mb-2"
+                  >
+                    Tipo de Evento *
+                  </label>
+                  <input
+                    id="eventType"
+                    name="eventType"
+                    type="text"
+                    required
+                    value={formData.eventType}
+                    onChange={handleChange}
+                    placeholder="Ej: Serenata, Cumpleaños, Aniversario"
+                    className="w-full rounded-md border border-border bg-background px-4 py-2 text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium text-foreground mb-2"
+                  >
+                    Mensaje *
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    required
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Cuéntanos sobre tu evento: fecha, hora, ubicación..."
+                    rows={4}
+                    className="w-full rounded-md border border-border bg-background px-4 py-2 text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent resize-none"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-md bg-accent text-accent-foreground px-6 py-3 text-sm font-medium hover:bg-accent/90 transition-colors"
+                >
+                  <Send className="w-4 h-4" />
+                  Enviar por WhatsApp
+                </button>
+
+                <p className="text-xs text-muted-foreground text-center">
+                  Al enviar, serás redirigido a WhatsApp para completar tu
+                  solicitud
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
