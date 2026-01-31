@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import Footer from "@/components/footer";
+import Header from "@/components/header";
 import { siteConfig } from "@/config/site";
 
 const playfairDisplay = Playfair_Display({
@@ -61,7 +63,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${playfairDisplay.variable} antialiased`}
       >
-        {children}
+        <Header />
+        <main className="py-40 px-8 min-h-dvh">{children}</main>
+        <Footer />
       </body>
     </html>
   );
