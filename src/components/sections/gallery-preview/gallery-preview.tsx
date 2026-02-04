@@ -1,20 +1,24 @@
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import SectionHeader from "@/components/section-header";
 
 const images = [
   {
     id: 1,
+    src: "/photo-1.jpg",
     alt: "Serenata romántica",
     placeholder: "bg-accent/20",
   },
   {
     id: 2,
+    src: "/photo-2.jpg",
     alt: "Festival universitario",
     placeholder: "bg-primary/20",
   },
   {
     id: 3,
+    src: "/photo-3.jpg",
     alt: "Presentación nocturna",
     placeholder: "bg-accent/30",
   },
@@ -36,15 +40,12 @@ export default function GalleryPreview() {
               key={image.id}
               className={`relative aspect-square rounded-lg overflow-hidden group ${image.placeholder}`}
             >
-              {/* Placeholder - replace with actual images later */}
-              <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
-                <span className="text-sm">Imagen {image.id}</span>
-              </div>
-              <div className="absolute inset-0 bg-linear-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                <p className="text-primary-foreground font-semibold">
-                  {image.alt}
-                </p>
-              </div>
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                className="object-cover"
+              />
             </div>
           ))}
         </div>

@@ -52,7 +52,7 @@ export default function ServiceCard({
         </ul>
 
         <Link
-          href="#contact"
+          href="/contacto"
           className="mt-4 inline-flex items-center justify-center rounded-md bg-accent text-accent-foreground px-4 py-2 text-sm font-medium hover:bg-accent/90 transition-colors"
         >
           Solicitar Cotización

@@ -28,10 +28,12 @@ export default function Header() {
     <header
       className={`${
         isHomePage ? "fixed top-0 left-0" : "sticky top-0"
-      } w-full z-50 transition-all duration-300 ${
-        isHomePage && !isScrolled
-          ? "bg-transparent"
-          : "bg-primary-foreground/95 backdrop-blur-md shadow-lg"
+      } w-full z-50 ${isMobileMenuOpen ? "transition-none" : "transition-all duration-300"} ${
+        isMobileMenuOpen
+          ? "bg-primary-foreground shadow-lg"
+          : isHomePage && !isScrolled
+            ? "bg-transparent"
+            : "bg-primary-foreground/95 backdrop-blur-md shadow-lg"
       }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -54,7 +56,7 @@ export default function Header() {
                   className={`transition-colors ${
                     pathname === item.href
                       ? "text-accent"
-                      : useWhiteText
+                      : useWhiteText && !isMobileMenuOpen
                         ? "text-white/90 hover:text-white"
                         : "text-foreground hover:text-accent"
                   }`}
@@ -69,7 +71,11 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <button
             type="button"
-            className={`md:hidden z-10 ${useWhiteText ? "text-white" : "text-foreground"}`}
+            className={`md:hidden z-10 ${
+              useWhiteText && !isMobileMenuOpen
+                ? "text-white"
+                : "text-foreground"
+            }`}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
