@@ -45,7 +45,7 @@ export default function MusicaPage() {
       <PageHero
         title="Nuestra Música"
         description="Ya puedes escuchar nuestro álbum en las principales plataformas. Conoce las canciones que grabaron nuestros fundadores hace más de 20 años."
-        imageSrc="/hero.jpg"
+        imageSrc="/music.jpg"
         icon={<Music2 className="w-10 h-10 text-accent" />}
         imageClassName="opacity-40 mix-blend-overlay"
         quality={75}
