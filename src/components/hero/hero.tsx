@@ -15,9 +15,9 @@ export default function Hero() {
           fill
           priority
           className="object-cover"
-          quality={75}
+          quality={90}
         />
-        <div className="absolute inset-0 bg-primary/70" />
+        <div className="absolute inset-0 bg-linear-to-b from-primary/70 to-primary/90" />
       </div>
 
       <div className="col-start-1 row-start-1 relative z-10 container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 lg:py-32">

@@ -23,14 +23,14 @@ export default function TunosPage() {
         {/* Background Image */}
         <div className="absolute inset-0 w-full h-full">
           <Image
-            src="/hero.jpg"
+            src="/tunos.jpg"
             alt="Tuna Universidad de La Sabana"
             fill
-            className="object-cover opacity-40 mix-blend-overlay"
+            className="object-cover"
             priority
-            quality={75}
+            quality={90}
           />
-          <div className="absolute inset-0 bg-linear-to-b from-primary/90 to-primary/80" />
+          <div className="absolute inset-0 bg-linear-to-b from-primary/70 to-primary/90" />
         </div>
 
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
