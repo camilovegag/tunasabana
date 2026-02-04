@@ -1,6 +1,7 @@
 import { Award, ChevronDown, Music2, Users } from "lucide-react";
 import Image from "next/image";
 import { siteConfig } from "@/config/site";
+import HeroImg from "../../../public/hero.jpg";
 
 export default function Hero() {
   return (
@@ -10,14 +11,14 @@ export default function Hero() {
     >
       <div className="col-start-1 row-start-1 w-full h-dvh relative -z-10">
         <Image
-          src="/hero.jpg"
+          src={HeroImg}
           alt="Tuna Universidad de La Sabana en presentación"
           fill
           priority
           className="object-cover"
-          quality={90}
+          quality={75}
         />
-        <div className="absolute inset-0 bg-linear-to-b from-primary/70 to-primary/90" />
+        <div className="absolute inset-0 bg-linear-to-b from-primary/20 to-primary" />
       </div>
 
       <div className="col-start-1 row-start-1 relative z-10 container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
