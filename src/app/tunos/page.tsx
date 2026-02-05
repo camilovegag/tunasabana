@@ -10,9 +10,9 @@ import { tunos } from "@/data/tunos";
 export const metadata: Metadata = {
   title: "Tunos",
   description:
-    "Conoce a los integrantes de la Tuna Universidad de La Sabana. Estudiantes y egresados apasionados por la música y la tradición tunera.",
+    "Conoce a los tunos de la Universidad de La Sabana. Más de 46 músicos profesionales listos para llevar la mejor serenata de tuna a tu evento en Bogotá.",
   keywords:
-    "integrantes tuna sabana, tunos universidad sabana, músicos tuna, estudiantes tuna",
+    "tunos serenata bogota, musicos tuna universitaria, integrantes tuna sabana, contratar tuna profesional",
 };
 
 export default function TunosPage() {

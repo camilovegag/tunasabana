@@ -9,9 +9,9 @@ import { album } from "@/data/music";
 export const metadata: Metadata = {
   title: "Música",
   description:
-    "Escucha la música de la Tuna Universidad de La Sabana en Spotify. Nuestro álbum con canciones tradicionales grabadas por nuestros tunos.",
+    "Escucha la música de la Tuna Universidad de La Sabana en Spotify. Canciones tradicionales españolas para serenatas románticas en Bogotá.",
   keywords:
-    "tuna sabana música, spotify tuna, canciones tuna universitaria, música tradicional colombiana, álbum tuna",
+    "musica tuna serenata, spotify tuna sabana, canciones serenata bogota, musica española serenata, tuna universitaria spotify",
 };
 
 const platforms = [

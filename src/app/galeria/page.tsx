@@ -6,7 +6,7 @@ import PageHero from "@/components/sections/page-hero";
 export const metadata: Metadata = {
   title: "Galería",
   description:
-    "Galería de fotos de la Tuna Universidad de La Sabana. Revive nuestros mejores momentos y presentaciones.",
+    "Galería de fotos de la Tuna Universidad de La Sabana. Revive nuestras mejores serenatas, presentaciones y momentos especiales en Bogotá.",
 };
 
 export default function GaleriaPage() {

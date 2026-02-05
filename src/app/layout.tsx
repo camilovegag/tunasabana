@@ -3,6 +3,7 @@ import { Geist, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
+import StructuredData from "@/components/structured-data";
 import { siteConfig } from "@/config/site";
 
 const playfairDisplay = Playfair_Display({
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
-    // images: [siteConfig.ogImage],
+    images: [siteConfig.ogImage],
   },
   robots: {
     index: true,
@@ -63,6 +64,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${playfairDisplay.variable} antialiased`}
       >
+        <StructuredData />
         <Header />
         <main>{children}</main>
         <Footer />

@@ -27,9 +27,12 @@ export default function Hero() {
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-serif font-bold text-balance leading-tight drop-shadow-lg">
               {siteConfig.name}
             </h1>
-            <p className="text-lg sm:text-xl lg:text-3xl text-accent font-semibold drop-shadow-md">
-              Desde 1999, recorremos el mundo llevando alegría y amor por la
-              música.
+            <h2 className="text-lg sm:text-xl lg:text-2xl text-accent font-semibold drop-shadow-md">
+              La Mejor Serenata de Tuna en Bogotá
+            </h2>
+            <p className="text-base sm:text-lg text-primary-foreground/90 drop-shadow-md max-w-2xl mx-auto">
+              Desde 1999, llevamos alegría y amor por la música a bodas, grados,
+              cumpleaños y eventos especiales.
             </p>
           </div>
 
