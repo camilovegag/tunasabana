@@ -4,46 +4,23 @@ import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { navItems } from "@/config/navigation";
 
 export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const isHomePage = pathname === "/";
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // En homepage sin scroll, usar texto blanco sobre el hero oscuro
-  const useWhiteText = isHomePage && !isScrolled;
 
   return (
-    <header
-      className={`${
-        isHomePage ? "fixed top-0 left-0" : "sticky top-0"
-      } w-full z-50 ${isMobileMenuOpen ? "transition-none" : "transition-all duration-300"} ${
-        isMobileMenuOpen
-          ? "bg-primary-foreground shadow-lg"
-          : isHomePage && !isScrolled
-            ? "bg-transparent"
-            : "bg-primary-foreground/95 backdrop-blur-md shadow-lg"
-      }`}
-    >
+    <header className="sticky top-0 w-full z-50 bg-primary-foreground shadow-md">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <nav className="flex justify-between items-center py-4">
-          <Link href="/" className="relative z-10">
+          <Link href="/">
             <Image
               src="/logo.png"
               alt="Escudo de la Tuna Universidad de La Sabana"
-              height={64}
-              width={64}
+              height={56}
+              width={56}
               className="transition-transform hover:scale-105"
             />
           </Link>
@@ -56,9 +33,7 @@ export default function Header() {
                   className={`transition-colors ${
                     pathname === item.href
                       ? "text-accent"
-                      : useWhiteText && !isMobileMenuOpen
-                        ? "text-white/90 hover:text-white"
-                        : "text-foreground hover:text-accent"
+                      : "text-foreground hover:text-accent"
                   }`}
                   href={item.href}
                 >
@@ -71,11 +46,7 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <button
             type="button"
-            className={`md:hidden z-10 ${
-              useWhiteText && !isMobileMenuOpen
-                ? "text-white"
-                : "text-foreground"
-            }`}
+            className="md:hidden text-foreground"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -89,8 +60,8 @@ export default function Header() {
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="md:hidden py-4 bg-primary-foreground border-t border-border">
-            <ul className="space-y-3">
+          <div className="md:hidden absolute top-full left-0 w-full bg-primary-foreground border-t border-border shadow-lg">
+            <ul className="space-y-3 p-4">
               {navItems.map((item) => (
                 <li key={item.label}>
                   <Link

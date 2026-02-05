@@ -7,29 +7,26 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="grid place-items-center min-h-screen w-full relative isolate overflow-hidden"
+      className="grid place-items-center min-h-[calc(100dvh-5rem)] w-full relative isolate overflow-hidden bg-black"
     >
-      <div className="col-start-1 row-start-1 w-full h-dvh relative -z-10">
+      <div className="col-start-1 row-start-1 w-full min-h-full relative -z-10">
         <Image
           src={HeroImg}
           alt="Tuna Universidad de La Sabana en presentación"
           fill
           priority
-          className="object-cover"
-          quality={75}
+          className="object-cover opacity-60 md:opacity-100"
+          quality={90}
         />
-        <div className="absolute inset-0 bg-linear-to-b from-primary/20 to-primary" />
+        <div className="absolute inset-0 bg-linear-to-b from-primary/20 via-primary/40 to-primary md:from-primary/20 md:to-primary" />
       </div>
 
-      <div className="col-start-1 row-start-1 relative z-10 container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
+      <div className="col-start-1 row-start-1 relative z-10 container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-32">
         <div className="max-w-4xl mx-auto text-center space-y-8 text-primary-foreground">
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-serif font-bold text-balance leading-tight drop-shadow-lg">
               {siteConfig.name}
             </h1>
-            <h2 className="text-lg sm:text-xl lg:text-2xl text-accent font-semibold drop-shadow-md">
-              La Mejor Serenata de Tuna en Bogotá
-            </h2>
             <p className="text-base sm:text-lg text-primary-foreground/90 drop-shadow-md max-w-2xl mx-auto">
               Desde 1999, llevamos alegría y amor por la música a bodas, grados,
               cumpleaños y eventos especiales.
