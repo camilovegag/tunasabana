@@ -15,10 +15,9 @@ export default function GaleriaPage() {
       <PageHero
         title="Galería en Construcción"
         description="Estamos seleccionando las mejores fotos de nuestra historia para compartirlas contigo. ¡Muy pronto podrás verlas!"
-        imageSrc="/hero.jpg"
+        imageSrc="/gallery.jpg"
         icon={<Construction className="w-10 h-10 text-accent" />}
-        imageClassName="opacity-30 mix-blend-overlay"
-        quality={75}
+        quality={90}
       />
 
       <CTASection
