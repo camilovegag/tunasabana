@@ -148,7 +148,7 @@ export const tunos: Tuno[] = [
     id: 19,
     name: "Iván Leonardo Carrillo Lozano",
     nickname: "Beetlejuice",
-    image: "/tunos/beetle.jpg",
+    image: "/tunos/beetlejuice.jpg",
     instrument: "Guitarra",
     career: "Abogado",
   },
