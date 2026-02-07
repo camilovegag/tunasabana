@@ -2,7 +2,7 @@
 
 import { CalendarIcon, Clock, Mail, MapPin, Phone, Send } from "lucide-react";
 import type React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ContactInfoCard from "@/components/contact-info-card";
 import SectionHeader from "@/components/section-header";
 import { Calendar } from "@/components/ui/calendar";
@@ -34,6 +34,7 @@ const eventTypes = [
 ];
 
 export default function Contact() {
+  const [hasMounted, setHasMounted] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -43,6 +44,10 @@ export default function Contact() {
     eventTime: "",
     message: "",
   });
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -219,26 +224,32 @@ ${formData.message}`;
                   >
                     Tipo de Evento <span className="text-accent">*</span>
                   </label>
-                  <Select
-                    required
-                    value={formData.eventType}
-                    onValueChange={(value) =>
-                      setFormData((prev) => ({ ...prev, eventType: value }))
-                    }
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Selecciona el tipo de evento" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        {eventTypes.map((type) => (
-                          <SelectItem key={type.value} value={type.value}>
-                            {type.label}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
+                  {hasMounted ? (
+                    <Select
+                      required
+                      value={formData.eventType}
+                      onValueChange={(value) =>
+                        setFormData((prev) => ({ ...prev, eventType: value }))
+                      }
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Selecciona el tipo de evento" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          {eventTypes.map((type) => (
+                            <SelectItem key={type.value} value={type.value}>
+                              {type.label}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  ) : (
+                    <div className="w-full rounded-md border border-border bg-background px-4 py-2 text-muted-foreground">
+                      Selecciona el tipo de evento
+                    </div>
+                  )}
                 </div>
 
                 {/* Date and Time Picker */}
@@ -249,71 +260,82 @@ ${formData.message}`;
                   >
                     Fecha y Hora del Evento (opcional)
                   </label>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <button
-                        id="eventDatePicker"
-                        type="button"
-                        className={cn(
-                          "w-full flex items-center justify-start gap-2 rounded-md border border-border bg-background px-4 py-2 text-left font-normal transition-colors hover:bg-muted/50",
-                          !formData.eventDate && "text-muted-foreground",
-                        )}
-                      >
-                        <CalendarIcon className="h-4 w-4" />
-                        {formData.eventDate ? (
-                          <span>
-                            {formData.eventDate.toLocaleDateString("es-CO", {
-                              weekday: "short",
-                              year: "numeric",
-                              month: "short",
-                              day: "numeric",
-                            })}
-                            {formData.eventTime &&
-                              ` a las ${formData.eventTime}`}
-                          </span>
-                        ) : (
-                          "Selecciona fecha y hora"
-                        )}
-                      </button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <div className="flex flex-col">
-                        <Calendar
-                          mode="single"
-                          selected={formData.eventDate}
-                          onSelect={(date) =>
-                            setFormData((prev) => ({
-                              ...prev,
-                              eventDate: date,
-                            }))
-                          }
-                          disabled={(date) => date < new Date()}
-                          className="rounded-t-md border-b-0"
-                        />
-                        <div className="border-t bg-muted/50 p-3 rounded-b-md">
-                          <label
-                            htmlFor="eventTime"
-                            className="flex items-center gap-2 text-sm font-medium text-foreground"
-                          >
-                            <Clock className="h-4 w-4 text-muted-foreground" />
-                            Hora del evento
-                          </label>
-                          <input
-                            id="eventTime"
-                            type="time"
-                            value={formData.eventTime || ""}
-                            onChange={(e) =>
+                  {hasMounted ? (
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <button
+                          id="eventDatePicker"
+                          type="button"
+                          className={cn(
+                            "w-full flex items-center justify-start gap-2 rounded-md border border-border bg-background px-4 py-2 text-left font-normal transition-colors hover:bg-muted/50",
+                            !formData.eventDate && "text-muted-foreground",
+                          )}
+                        >
+                          <CalendarIcon className="h-4 w-4" />
+                          {formData.eventDate ? (
+                            <span>
+                              {formData.eventDate.toLocaleDateString("es-CO", {
+                                weekday: "short",
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric",
+                              })}
+                              {formData.eventTime &&
+                                ` a las ${formData.eventTime}`}
+                            </span>
+                          ) : (
+                            "Selecciona fecha y hora"
+                          )}
+                        </button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <div className="flex flex-col">
+                          <Calendar
+                            mode="single"
+                            selected={formData.eventDate}
+                            onSelect={(date) =>
                               setFormData((prev) => ({
                                 ...prev,
-                                eventTime: e.target.value,
+                                eventDate: date,
                               }))
                             }
-                            className="mt-2 w-[224px] rounded-md border border-border bg-background px-3 py-2 text-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+                            disabled={(date) => date < new Date()}
+                            className="rounded-t-md border-b-0"
                           />
+                          <div className="border-t bg-muted/50 p-3 rounded-b-md">
+                            <label
+                              htmlFor="eventTime"
+                              className="flex items-center gap-2 text-sm font-medium text-foreground"
+                            >
+                              <Clock className="h-4 w-4 text-muted-foreground" />
+                              Hora del evento
+                            </label>
+                            <input
+                              id="eventTime"
+                              type="time"
+                              value={formData.eventTime || ""}
+                              onChange={(e) =>
+                                setFormData((prev) => ({
+                                  ...prev,
+                                  eventTime: e.target.value,
+                                }))
+                              }
+                              className="mt-2 w-[224px] rounded-md border border-border bg-background px-3 py-2 text-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+                            />
+                          </div>
                         </div>
-                      </div>
-                    </PopoverContent>
-                  </Popover>
+                      </PopoverContent>
+                    </Popover>
+                  ) : (
+                    <button
+                      id="eventDatePicker"
+                      type="button"
+                      className="w-full flex items-center justify-start gap-2 rounded-md border border-border bg-background px-4 py-2 text-left font-normal text-muted-foreground"
+                    >
+                      <CalendarIcon className="h-4 w-4" />
+                      Selecciona fecha y hora
+                    </button>
+                  )}
                 </div>
 
                 <div>
