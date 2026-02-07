@@ -4,46 +4,23 @@ import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { navItems } from "@/config/navigation";
 
 export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const isHomePage = pathname === "/";
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // En homepage sin scroll, usar texto blanco sobre el hero oscuro
-  const useWhiteText = isHomePage && !isScrolled;
 
   return (
-    <header
-      className={`${
-        isHomePage ? "fixed top-0 left-0" : "sticky top-0"
-      } w-full z-50 ${isMobileMenuOpen ? "transition-none" : "transition-all duration-300"} ${
-        isMobileMenuOpen
-          ? "bg-primary-foreground shadow-lg"
-          : isHomePage && !isScrolled
-            ? "bg-transparent"
-            : "bg-primary-foreground/95 backdrop-blur-md shadow-lg"
-      }`}
-    >
+    <header className="sticky top-0 w-full z-50 bg-primary shadow-md border-b border-primary-foreground/10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <nav className="flex justify-between items-center py-4">
-          <Link href="/" className="relative z-10">
+          <Link href="/">
             <Image
               src="/logo.png"
               alt="Escudo de la Tuna Universidad de La Sabana"
-              height={64}
-              width={64}
+              height={56}
+              width={56}
               className="transition-transform hover:scale-105"
             />
           </Link>
@@ -55,10 +32,8 @@ export default function Header() {
                 <Link
                   className={`transition-colors ${
                     pathname === item.href
-                      ? "text-accent"
-                      : useWhiteText && !isMobileMenuOpen
-                        ? "text-white/90 hover:text-white"
-                        : "text-foreground hover:text-accent"
+                      ? "text-primary-foreground font-semibold underline underline-offset-4 decoration-2"
+                      : "text-primary-foreground/80 hover:text-primary-foreground"
                   }`}
                   href={item.href}
                 >
@@ -71,33 +46,29 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <button
             type="button"
-            className={`md:hidden z-10 ${
-              useWhiteText && !isMobileMenuOpen
-                ? "text-white"
-                : "text-foreground"
-            }`}
+            className="md:hidden text-primary-foreground hover:text-primary-foreground/80 transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? (
-              <X className="w-6 h-6" />
+              <X className="w-8 h-8" />
             ) : (
-              <Menu className="w-6 h-6" />
+              <Menu className="w-8 h-8" />
             )}
           </button>
         </nav>
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="md:hidden py-4 bg-primary-foreground border-t border-border">
-            <ul className="space-y-3">
+          <div className="md:hidden absolute top-full left-0 w-full bg-primary border-t border-primary-foreground/10 shadow-lg">
+            <ul className="p-6 flex flex-col gap-4 items-center">
               {navItems.map((item) => (
                 <li key={item.label}>
                   <Link
-                    className={`block py-2 transition-colors ${
+                    className={`block py-2 text-lg font-medium transition-colors ${
                       pathname === item.href
-                        ? "text-accent font-semibold"
-                        : "text-foreground hover:text-accent"
+                        ? "text-primary-foreground font-semibold underline underline-offset-4"
+                        : "text-primary-foreground/80 hover:text-primary-foreground"
                     }`}
                     href={item.href}
                     onClick={() => setIsMobileMenuOpen(false)}

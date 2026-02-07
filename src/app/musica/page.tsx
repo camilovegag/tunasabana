@@ -9,9 +9,9 @@ import { album } from "@/data/music";
 export const metadata: Metadata = {
   title: "Música",
   description:
-    "Escucha la música de la Tuna Universidad de La Sabana en Spotify. Nuestro álbum con canciones tradicionales grabadas por nuestros tunos.",
+    "Escucha la música de la Tuna Universidad de La Sabana en Spotify. Canciones tradicionales españolas para serenatas románticas en Bogotá.",
   keywords:
-    "tuna sabana música, spotify tuna, canciones tuna universitaria, música tradicional colombiana, álbum tuna",
+    "musica tuna serenata, spotify tuna sabana, canciones serenata bogota, musica española serenata, tuna universitaria spotify",
 };
 
 const platforms = [
@@ -47,8 +47,7 @@ export default function MusicaPage() {
         description="Ya puedes escuchar nuestro álbum en las principales plataformas. Conoce las canciones que grabaron nuestros fundadores hace más de 20 años."
         imageSrc="/music.jpg"
         icon={<Music2 className="w-10 h-10 text-accent" />}
-        imageClassName="opacity-40 mix-blend-overlay"
-        quality={75}
+        quality={90}
       />
 
       {/* Spotify Embed Section */}
@@ -74,15 +73,6 @@ export default function MusicaPage() {
 
             {/* Track List */}
             <div className="bg-card border border-border rounded-lg overflow-hidden">
-              <div className="p-6 border-b border-border">
-                <h3 className="text-xl font-serif font-bold text-foreground">
-                  Nuestro Repertorio
-                </h3>
-                <p className="text-muted-foreground mt-1">
-                  Algunas de las canciones que interpretamos en nuestras
-                  presentaciones
-                </p>
-              </div>
               <div className="divide-y divide-border">
                 {album.songs.map((song, index) => (
                   <div
@@ -126,7 +116,7 @@ export default function MusicaPage() {
               {platforms.map((platform) => (
                 <div
                   key={platform.name}
-                  className="group bg-card border border-border rounded-lg p-6 text-center space-y-4 hover:shadow-lg transition-shadow"
+                  className="group bg-card border border-border rounded-lg p-6 text-center space-y-4 hover:shadow-lg transition-shadow cursor-pointer"
                 >
                   <div
                     className={`w-16 h-16 rounded-full ${platform.color} flex items-center justify-center mx-auto group-hover:scale-110 transition-transform`}
