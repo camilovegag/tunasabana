@@ -1,11 +1,37 @@
 "use client";
 
-import { Mail, MapPin, Phone, Send } from "lucide-react";
+import { CalendarIcon, Clock, Mail, MapPin, Phone, Send } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
 import ContactInfoCard from "@/components/contact-info-card";
 import SectionHeader from "@/components/section-header";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { siteConfig } from "@/config/site";
+import { cn } from "@/lib/utils";
+
+const eventTypes = [
+  { value: "serenata", label: "Serenata" },
+  { value: "cumpleanos", label: "Cumpleaños" },
+  { value: "aniversario", label: "Aniversario" },
+  { value: "matrimonio", label: "Matrimonio" },
+  { value: "evento-corporativo", label: "Evento Corporativo" },
+  { value: "evento-universitario", label: "Evento Universitario" },
+  { value: "festival", label: "Festival / Certamen" },
+  { value: "otro", label: "Otro" },
+];
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -13,14 +39,35 @@ export default function Contact() {
     email: "",
     phone: "",
     eventType: "",
+    eventDate: undefined as Date | undefined,
+    eventTime: "",
     message: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const eventTypeLabel =
+      eventTypes.find((t) => t.value === formData.eventType)?.label ||
+      formData.eventType;
+
+    const dateStr = formData.eventDate
+      ? formData.eventDate.toLocaleDateString("es-CO", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      : "Por definir";
+
+    const timeStr = formData.eventTime || "Por definir";
+
     const message = `¡Hola Tuna Sabana! 🎶
 
-Me gustaría recibir una cotización para un evento tipo *${formData.eventType}*.
+Me gustaría recibir una cotización para un evento tipo *${eventTypeLabel}*.
+
+📅 *Fecha del evento:* ${dateStr}
+🕐 *Hora tentativa:* ${timeStr}
 
 Soy *${formData.name}* y mis datos de contacto son:
 📞 ${formData.phone}
@@ -112,7 +159,7 @@ ${formData.message}`;
                     htmlFor="name"
                     className="block text-sm font-medium text-foreground mb-2"
                   >
-                    Nombre Completo *
+                    Nombre Completo <span className="text-accent">*</span>
                   </label>
                   <input
                     id="name"
@@ -131,7 +178,7 @@ ${formData.message}`;
                     htmlFor="email"
                     className="block text-sm font-medium text-foreground mb-2"
                   >
-                    Correo Electrónico *
+                    Correo Electrónico <span className="text-accent">*</span>
                   </label>
                   <input
                     id="email"
@@ -150,7 +197,7 @@ ${formData.message}`;
                     htmlFor="phone"
                     className="block text-sm font-medium text-foreground mb-2"
                   >
-                    Teléfono / WhatsApp *
+                    Teléfono / WhatsApp <span className="text-accent">*</span>
                   </label>
                   <input
                     id="phone"
@@ -164,23 +211,109 @@ ${formData.message}`;
                   />
                 </div>
 
+                {/* Event Type Select */}
                 <div>
                   <label
                     htmlFor="eventType"
                     className="block text-sm font-medium text-foreground mb-2"
                   >
-                    Tipo de Evento *
+                    Tipo de Evento <span className="text-accent">*</span>
                   </label>
-                  <input
-                    id="eventType"
-                    name="eventType"
-                    type="text"
+                  <Select
                     required
                     value={formData.eventType}
-                    onChange={handleChange}
-                    placeholder="Ej: Serenata, Cumpleaños, Aniversario"
-                    className="w-full rounded-md border border-border bg-background px-4 py-2 text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
-                  />
+                    onValueChange={(value) =>
+                      setFormData((prev) => ({ ...prev, eventType: value }))
+                    }
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Selecciona el tipo de evento" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {eventTypes.map((type) => (
+                          <SelectItem key={type.value} value={type.value}>
+                            {type.label}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Date and Time Picker */}
+                <div>
+                  <label
+                    htmlFor="eventDatePicker"
+                    className="block text-sm font-medium text-foreground mb-2"
+                  >
+                    Fecha y Hora del Evento (opcional)
+                  </label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button
+                        id="eventDatePicker"
+                        type="button"
+                        className={cn(
+                          "w-full flex items-center justify-start gap-2 rounded-md border border-border bg-background px-4 py-2 text-left font-normal transition-colors hover:bg-muted/50",
+                          !formData.eventDate && "text-muted-foreground",
+                        )}
+                      >
+                        <CalendarIcon className="h-4 w-4" />
+                        {formData.eventDate ? (
+                          <span>
+                            {formData.eventDate.toLocaleDateString("es-CO", {
+                              weekday: "short",
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            })}
+                            {formData.eventTime &&
+                              ` a las ${formData.eventTime}`}
+                          </span>
+                        ) : (
+                          "Selecciona fecha y hora"
+                        )}
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <div className="flex flex-col">
+                        <Calendar
+                          mode="single"
+                          selected={formData.eventDate}
+                          onSelect={(date) =>
+                            setFormData((prev) => ({
+                              ...prev,
+                              eventDate: date,
+                            }))
+                          }
+                          disabled={(date) => date < new Date()}
+                          className="rounded-t-md border-b-0"
+                        />
+                        <div className="border-t bg-muted/50 p-3 rounded-b-md">
+                          <label
+                            htmlFor="eventTime"
+                            className="flex items-center gap-2 text-sm font-medium text-foreground"
+                          >
+                            <Clock className="h-4 w-4 text-muted-foreground" />
+                            Hora del evento
+                          </label>
+                          <input
+                            id="eventTime"
+                            type="time"
+                            value={formData.eventTime || ""}
+                            onChange={(e) =>
+                              setFormData((prev) => ({
+                                ...prev,
+                                eventTime: e.target.value,
+                              }))
+                            }
+                            className="mt-2 w-[224px] rounded-md border border-border bg-background px-3 py-2 text-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+                          />
+                        </div>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
                 </div>
 
                 <div>
@@ -188,7 +321,7 @@ ${formData.message}`;
                     htmlFor="message"
                     className="block text-sm font-medium text-foreground mb-2"
                   >
-                    Mensaje *
+                    Mensaje <span className="text-accent">*</span>
                   </label>
                   <textarea
                     id="message"
@@ -196,7 +329,7 @@ ${formData.message}`;
                     required
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Cuéntanos sobre tu evento: fecha, hora, ubicación..."
+                    placeholder="Cuéntanos sobre tu evento: lugar, cantidad de personas, canciones especiales..."
                     rows={4}
                     className="w-full rounded-md border border-border bg-background px-4 py-2 text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent resize-none"
                   />

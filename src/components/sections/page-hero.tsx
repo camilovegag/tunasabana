@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { cn } from "@/lib/utils";
 
 interface PageHeroProps {
   title: string;
@@ -7,7 +6,6 @@ interface PageHeroProps {
   imageSrc: string;
   imageAlt?: string;
   icon: React.ReactNode;
-  imageClassName?: string;
   quality?: number;
 }
 
@@ -17,7 +15,6 @@ export default function PageHero({
   imageSrc,
   imageAlt,
   icon,
-  imageClassName,
   quality = 75,
 }: PageHeroProps) {
   return (
@@ -28,7 +25,7 @@ export default function PageHero({
           src={imageSrc}
           alt={imageAlt || title}
           fill
-          className={cn("object-cover", imageClassName)}
+          className="object-cover"
           priority
           quality={quality}
         />

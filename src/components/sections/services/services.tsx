@@ -2,7 +2,6 @@ import { Building2, GraduationCap, Heart, PartyPopper } from "lucide-react";
 import Link from "next/link";
 import SectionHeader from "@/components/section-header";
 import ServiceCard from "@/components/service-card";
-import { siteConfig } from "@/config/site";
 
 const services = [
   {
@@ -64,8 +63,8 @@ export default function Services() {
     <section id="services" className="py-20 lg:py-32 bg-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
-          title="Nuestros Servicios"
-          subtitle="Ofrecemos una amplia variedad de servicios musicales para todo tipo de ocasiones. Cada presentación es única y personalizada según tus necesidades."
+          title="Serenatas de Tuna en Bogotá"
+          subtitle="Ofrecemos serenatas para todo tipo de ocasiones: serenatas románticas, de grado, cumpleaños, bodas y eventos corporativos. Contrata la mejor tuna universitaria de Colombia."
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
