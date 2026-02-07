@@ -12,7 +12,7 @@ export default function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 w-full z-50 bg-primary-foreground shadow-md">
+    <header className="sticky top-0 w-full z-50 bg-primary shadow-md border-b border-primary-foreground/10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <nav className="flex justify-between items-center py-4">
           <Link href="/">
@@ -32,8 +32,8 @@ export default function Header() {
                 <Link
                   className={`transition-colors ${
                     pathname === item.href
-                      ? "text-accent"
-                      : "text-foreground hover:text-accent"
+                      ? "text-primary-foreground font-semibold underline underline-offset-4 decoration-2"
+                      : "text-primary-foreground/80 hover:text-primary-foreground"
                   }`}
                   href={item.href}
                 >
@@ -46,29 +46,29 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <button
             type="button"
-            className="md:hidden text-foreground"
+            className="md:hidden text-primary-foreground hover:text-primary-foreground/80 transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? (
-              <X className="w-6 h-6" />
+              <X className="w-8 h-8" />
             ) : (
-              <Menu className="w-6 h-6" />
+              <Menu className="w-8 h-8" />
             )}
           </button>
         </nav>
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 w-full bg-primary-foreground border-t border-border shadow-lg">
-            <ul className="space-y-3 p-4">
+          <div className="md:hidden absolute top-full left-0 w-full bg-primary border-t border-primary-foreground/10 shadow-lg">
+            <ul className="p-6 flex flex-col gap-4 items-center">
               {navItems.map((item) => (
                 <li key={item.label}>
                   <Link
-                    className={`block py-2 transition-colors ${
+                    className={`block py-2 text-lg font-medium transition-colors ${
                       pathname === item.href
-                        ? "text-accent font-semibold"
-                        : "text-foreground hover:text-accent"
+                        ? "text-primary-foreground font-semibold underline underline-offset-4"
+                        : "text-primary-foreground/80 hover:text-primary-foreground"
                     }`}
                     href={item.href}
                     onClick={() => setIsMobileMenuOpen(false)}

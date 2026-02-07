@@ -1,7 +1,7 @@
-import { Award, ChevronDown, Music2, Users } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import { siteConfig } from "@/config/site";
-import HeroImg from "../../../public/hero.jpg";
+import HeroImg from "../../../public/walk.jpg";
 
 export default function Hero() {
   return (
@@ -15,47 +15,22 @@ export default function Hero() {
           alt="Tuna Universidad de La Sabana en presentación"
           fill
           priority
-          className="object-cover opacity-60 md:opacity-100"
+          className="object-cover"
           quality={90}
         />
-        <div className="absolute inset-0 bg-linear-to-b from-primary/20 via-primary/40 to-primary md:from-primary/20 md:to-primary" />
+        <div className="absolute inset-0 bg-linear-to-b from-primary/30 to-primary" />
       </div>
 
       <div className="col-start-1 row-start-1 relative z-10 container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-32">
         <div className="max-w-4xl mx-auto text-center space-y-8 text-primary-foreground">
           <div className="space-y-4">
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-serif font-bold text-balance leading-tight drop-shadow-lg">
+            <h1 className="text-5xl lg:text-7xl font-serif font-bold text-balance leading-tight drop-shadow-lg">
               {siteConfig.name}
             </h1>
             <p className="text-base sm:text-lg text-primary-foreground/90 drop-shadow-md max-w-2xl mx-auto">
               Desde 1999, llevamos alegría y amor por la música a bodas, grados,
               cumpleaños y eventos especiales.
             </p>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 pt-4 max-w-[200px] sm:max-w-3xl mx-auto">
-            <div className="flex flex-col items-center gap-2 p-6 bg-primary-foreground/10 rounded-lg backdrop-blur-sm border border-primary-foreground/10">
-              <Award className="w-10 h-10 text-accent" />
-              <p className="text-3xl sm:text-4xl font-bold text-accent">+25</p>
-              <p className="text-sm text-primary-foreground/90 font-medium">
-                Años de Trayectoria
-              </p>
-            </div>
-            <div className="flex flex-col items-center gap-2 p-6 bg-primary-foreground/10 rounded-lg backdrop-blur-sm border border-primary-foreground/10">
-              <Music2 className="w-10 h-10 text-accent" />
-              <p className="text-3xl sm:text-4xl font-bold text-accent">+500</p>
-              <p className="text-sm text-primary-foreground/90 font-medium">
-                Serenatas Realizadas
-              </p>
-            </div>
-            <div className="flex flex-col items-center gap-2 p-6 bg-primary-foreground/10 rounded-lg backdrop-blur-sm border border-primary-foreground/10">
-              <Users className="w-10 h-10 text-accent" />
-              <p className="text-3xl sm:text-4xl font-bold text-accent">100%</p>
-              <p className="text-sm text-primary-foreground/90 font-medium">
-                Satisfacción
-              </p>
-            </div>
           </div>
         </div>
       </div>

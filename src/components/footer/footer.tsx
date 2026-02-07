@@ -47,6 +47,10 @@ export default function Footer() {
           <p>
             {siteConfig.name} &#169; {currentYear}.
           </p>
+          <p className="text-xs mt-2 text-primary-foreground/50">
+            Este sitio usa analíticas anónimas para mejorar la experiencia del
+            usuario. No recopilamos datos personales.
+          </p>
         </div>
       </div>
     </footer>
