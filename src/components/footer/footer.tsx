@@ -1,3 +1,4 @@
+import { Phone } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
@@ -29,18 +30,34 @@ export default function Footer() {
               música.
             </p>
           </div>
-          <div className="flex gap-3 mx-auto md:mx-0">
-            {social.map((item) => (
-              <a
-                className="w-10 h-10 rounded-full bg-primary-foreground/10 grid place-items-center hover:bg-accent transition-colors"
-                key={item.name}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Image src={item.src} alt={item.name} height={20} width={20} />
-              </a>
-            ))}
+          <div className="flex flex-col items-center gap-6 mx-auto md:mx-0">
+            <div className="flex gap-3">
+              {social.map((item) => (
+                <a
+                  className="w-10 h-10 rounded-full bg-primary-foreground/10 grid place-items-center hover:bg-accent transition-colors"
+                  key={item.name}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Image
+                    src={item.src}
+                    alt={item.name}
+                    height={20}
+                    width={20}
+                  />
+                </a>
+              ))}
+            </div>
+            <a
+              href={`https://wa.me/${siteConfig.contact.phone.replace(/\D/g, "")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="md:ml-auto flex items-center gap-2 text-sm text-primary-foreground/90 hover:text-accent transition-colors"
+            >
+              <Phone className="w-4 h-4" />
+              {siteConfig.contact.phone}
+            </a>
           </div>
         </nav>
         <div className="border-t border-primary-foreground/20 pt-8 text-center text-primary-foreground/70 text-sm">

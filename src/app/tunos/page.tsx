@@ -32,19 +32,19 @@ export default function TunosPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
             <div className="text-center">
-              <p className="text-3xl font-bold text-accent">{tunos.length}</p>
-              <p className="text-muted-foreground">Tunos</p>
-            </div>
-            <div className="text-center">
-              <p className="text-3xl font-bold text-accent">+ 50</p>
+              <p className="text-3xl font-bold text-accent">+50</p>
               <p className="text-muted-foreground">Integrantes</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-accent">+7</p>
-              <p className="text-muted-foreground">Instrumentos</p>
+              <p className="text-3xl font-bold text-accent">+60</p>
+              <p className="text-muted-foreground">Canciones</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-accent">+25</p>
+              <p className="text-3xl font-bold text-accent">+450</p>
+              <p className="text-muted-foreground">Serenatas</p>
+            </div>
+            <div className="text-center">
+              <p className="text-3xl font-bold text-accent">26</p>
               <p className="text-muted-foreground">Años de historia</p>
             </div>
           </div>
