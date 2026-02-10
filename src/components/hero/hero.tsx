@@ -1,27 +1,76 @@
+"use client";
+
+import Autoplay from "embla-carousel-autoplay";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
 import { siteConfig } from "@/config/site";
-import HeroImg from "../../../public/walk.jpg";
+
+const heroImages = [
+  {
+    src: "/walk.jpg",
+    alt: "Tuna Universidad de La Sabana caminando en presentación",
+  },
+  {
+    src: "/hero.jpg",
+    alt: "Tuna Universidad de La Sabana en concierto",
+  },
+  {
+    src: "/gallery.jpg",
+    alt: "Tuna Universidad de La Sabana en evento especial",
+  },
+];
 
 export default function Hero() {
   return (
     <section
       id="hero"
-      className="grid place-items-center min-h-[calc(100dvh-5rem)] w-full relative isolate overflow-hidden bg-black"
+      className="relative isolate overflow-hidden bg-black min-h-[calc(100dvh-5rem)]"
     >
-      <div className="col-start-1 row-start-1 w-full min-h-full relative -z-10">
-        <Image
-          src={HeroImg}
-          alt="Tuna Universidad de La Sabana en presentación"
-          fill
-          priority
-          className="object-cover"
-          quality={90}
-        />
+      {/* Background Carousel - absolute positioned */}
+      <div className="absolute inset-0 -z-10">
+        <Carousel
+          opts={{
+            loop: true,
+            duration: 50,
+          }}
+          plugins={[
+            Autoplay({
+              delay: 5000,
+              stopOnInteraction: false,
+              stopOnMouseEnter: false,
+            }),
+          ]}
+          className="h-full"
+        >
+          <CarouselContent className="ml-0">
+            {heroImages.map((image) => (
+              <CarouselItem key={image.src} className="pl-0">
+                <div className="relative w-full h-full">
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    priority
+                    className="object-cover"
+                    quality={90}
+                    sizes="100vw"
+                  />
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
         <div className="absolute inset-0 bg-linear-to-b from-primary/30 to-primary" />
       </div>
 
-      <div className="col-start-1 row-start-1 relative z-10 container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-32">
+      {/* Content */}
+      <div className="relative z-10 container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-32 min-h-[calc(100dvh-5rem)] flex items-center justify-center">
         <div className="max-w-4xl mx-auto text-center space-y-8 text-primary-foreground">
           <div className="space-y-4">
             <h1 className="text-5xl lg:text-7xl font-serif font-bold text-balance leading-tight drop-shadow-lg">
@@ -32,6 +81,13 @@ export default function Hero() {
               cumpleaños y eventos especiales.
             </p>
           </div>
+
+          <Link
+            href="/contacto"
+            className="inline-flex items-center justify-center gap-2 rounded-md bg-accent text-accent-foreground px-8 py-3 text-base font-semibold hover:bg-accent/90 transition-colors shadow-lg"
+          >
+            ¡Contáctanos!
+          </Link>
         </div>
       </div>
 
