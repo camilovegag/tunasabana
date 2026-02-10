@@ -14,15 +14,23 @@ import { siteConfig } from "@/config/site";
 const heroImages = [
   {
     src: "/walk.jpg",
-    alt: "Tuna Universidad de La Sabana caminando en presentación",
+    alt: "Tuna Universidad de La Sabana caminando en la Universidad",
   },
   {
     src: "/hero.jpg",
-    alt: "Tuna Universidad de La Sabana en concierto",
+    alt: "Integrantes de la Tuna Universidad de La Sabana",
   },
   {
     src: "/gallery.jpg",
-    alt: "Tuna Universidad de La Sabana en evento especial",
+    alt: "Tuna Universidad de La Sabana en su festival 2025",
+  },
+  {
+    src: "/music.jpg",
+    alt: "Tuna Universidad de La Sabana cantando en tarima",
+  },
+  {
+    src: "/pandereta.jpg",
+    alt: "Show de panderetas de la Tuna Universidad de La Sabana",
   },
 ];
 
@@ -41,7 +49,7 @@ export default function Hero() {
           }}
           plugins={[
             Autoplay({
-              delay: 5000,
+              delay: 4500,
               stopOnInteraction: false,
               stopOnMouseEnter: false,
             }),
@@ -84,7 +92,7 @@ export default function Hero() {
 
           <Link
             href="/contacto"
-            className="inline-flex items-center justify-center gap-2 rounded-md bg-accent text-accent-foreground px-8 py-3 text-base font-semibold hover:bg-accent/90 transition-colors shadow-lg"
+            className="inline-flex items-center justify-center gap-2 rounded-md bg-accent text-accent-foreground px-8 py-3 text-base font-semibold hover:bg-secondary transition-colors shadow-lg"
           >
             ¡Contáctanos!
           </Link>

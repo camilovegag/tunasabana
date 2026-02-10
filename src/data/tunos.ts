@@ -68,7 +68,8 @@ export const tunos: Tuno[] = [
     name: "Eduardo Gonzales",
     nickname: "Petaco",
     image: "",
-    instrument: "Médico",
+    instrument: "Guitarra",
+    career: "Médico",
   },
   {
     id: 9,
@@ -76,6 +77,7 @@ export const tunos: Tuno[] = [
     nickname: "Petaquito",
     image: "",
     instrument: "Guitarra",
+    career: "Médico",
   },
   {
     id: 10,
@@ -99,6 +101,7 @@ export const tunos: Tuno[] = [
     image:
       "https://drive.google.com/uc?export=view&id=14UN3VNTTVZI9AEFSqswtY_Tk8MQ7OBPU",
     instrument: "Guitarra",
+    career: "Médico",
   },
   {
     id: 13,
@@ -120,7 +123,8 @@ export const tunos: Tuno[] = [
     name: "Diego Felipe Tovar Quiroga",
     nickname: "Dieguito",
     image: "",
-    instrument: "Médico",
+    instrument: "Bandola",
+    career: "Médico",
   },
   {
     id: 16,
@@ -213,6 +217,7 @@ export const tunos: Tuno[] = [
     nickname: "Roni",
     image: "",
     instrument: "Guitarra",
+    career: "Fisioterapeuta",
   },
   {
     id: 28,
