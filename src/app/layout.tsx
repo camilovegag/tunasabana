@@ -6,6 +6,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import StructuredData from "@/components/structured-data";
+import WhatsappButton from "@/components/whatsapp-button";
 import { siteConfig } from "@/config/site";
 
 const playfairDisplay = Playfair_Display({
@@ -70,6 +71,7 @@ export default function RootLayout({
         <Header />
         <main>{children}</main>
         <Footer />
+        <WhatsappButton />
         <Analytics />
         <SpeedInsights />
       </body>
