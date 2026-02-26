@@ -28,6 +28,7 @@ export default function PageHero({
           className="object-cover"
           priority
           quality={quality}
+          sizes="100vw"
         />
         <div className="absolute inset-0 bg-linear-to-b from-primary/20 to-primary" />
       </div>

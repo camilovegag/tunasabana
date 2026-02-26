@@ -70,7 +70,7 @@ export default function Hero() {
                     fill
                     priority={image.priority}
                     className="object-cover"
-                    quality={90}
+                    quality={image.priority ? 90 : 75}
                     sizes="100vw"
                   />
                 </div>
