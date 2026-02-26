@@ -1,6 +1,7 @@
 import Script from "next/script";
 
 const GTM_ID = "GTM-P9D2JB5N";
+const GOOGLE_ADS_ID = "AW-17977417521";
 
 export function GoogleTagManager() {
   return (
@@ -16,6 +17,29 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','${GTM_ID}');`,
       }}
     />
+  );
+}
+
+export function GoogleAdsTag() {
+  return (
+    <>
+      <Script
+        id="gtag-js"
+        strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`}
+      />
+      <Script
+        id="gtag-config"
+        strategy="afterInteractive"
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: Google Ads gtag requires inline script, content is static and controlled
+        dangerouslySetInnerHTML={{
+          __html: `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GOOGLE_ADS_ID}');`,
+        }}
+      />
+    </>
   );
 }
 
