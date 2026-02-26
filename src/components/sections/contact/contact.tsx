@@ -1,31 +1,83 @@
 "use client";
 
-import { CalendarIcon, Clock, Mail, MapPin, Phone, Send } from "lucide-react";
+import { Mail, MapPin, Phone, Send } from "lucide-react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import type React from "react";
 import { useEffect, useState } from "react";
 import ContactInfoCard from "@/components/contact-info-card";
 import SectionHeader from "@/components/section-header";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { siteConfig } from "@/config/site";
 import { trackEvent } from "@/lib/tracking";
+
+// ─── Lazy-load heavy shadcn components ───────────────────────────────────────
+// These are not needed on initial paint — only when user interacts with the form.
+// Deferring them improves INP and reduces JS parse time on mobile.
+
+const Select = dynamic(
+  () => import("@/components/ui/select").then((m) => m.Select),
+  { ssr: false },
+);
+const SelectContent = dynamic(
+  () => import("@/components/ui/select").then((m) => m.SelectContent),
+  { ssr: false },
+);
+const SelectGroup = dynamic(
+  () => import("@/components/ui/select").then((m) => m.SelectGroup),
+  { ssr: false },
+);
+const SelectItem = dynamic(
+  () => import("@/components/ui/select").then((m) => m.SelectItem),
+  { ssr: false },
+);
+const SelectTrigger = dynamic(
+  () => import("@/components/ui/select").then((m) => m.SelectTrigger),
+  { ssr: false },
+);
+const SelectValue = dynamic(
+  () => import("@/components/ui/select").then((m) => m.SelectValue),
+  { ssr: false },
+);
+
+const Popover = dynamic(
+  () => import("@/components/ui/popover").then((m) => m.Popover),
+  { ssr: false },
+);
+const PopoverContent = dynamic(
+  () => import("@/components/ui/popover").then((m) => m.PopoverContent),
+  { ssr: false },
+);
+const PopoverTrigger = dynamic(
+  () => import("@/components/ui/popover").then((m) => m.PopoverTrigger),
+  { ssr: false },
+);
+
+// Calendar is the heaviest component — load it only when the date picker is opened
+const Calendar = dynamic(
+  () => import("@/components/ui/calendar").then((m) => m.Calendar),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-[280px] w-[280px] animate-pulse rounded-md bg-muted" />
+    ),
+  },
+);
+
+// ─── Icons lazy-loaded to avoid including full lucide bundle in initial chunk ─
+const CalendarIcon = dynamic(
+  () => import("lucide-react").then((m) => m.CalendarIcon),
+  { ssr: false },
+);
+const Clock = dynamic(() => import("lucide-react").then((m) => m.Clock), {
+  ssr: false,
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+
 import { cn } from "@/lib/utils";
 
 const eventTypes = [
@@ -245,7 +297,7 @@ ${formData.message.trim()}`;
                     />
                   </div>
 
-                  {/* Event Type Select */}
+                  {/* Event Type Select — lazy loaded */}
                   <div>
                     <Label htmlFor="eventType" className="mb-2 block">
                       Tipo de Evento <span className="text-accent">*</span>
@@ -278,7 +330,7 @@ ${formData.message.trim()}`;
                     )}
                   </div>
 
-                  {/* Date and Time Picker */}
+                  {/* Date and Time Picker — lazy loaded */}
                   <div>
                     <Label htmlFor="eventDatePicker" className="mb-2 block">
                       Fecha y Hora del Evento (opcional)
@@ -295,7 +347,9 @@ ${formData.message.trim()}`;
                               !formData.eventDate && "text-muted-foreground",
                             )}
                           >
-                            <CalendarIcon className="mr-2 h-4 w-4" />
+                            {CalendarIcon && (
+                              <CalendarIcon className="mr-2 h-4 w-4" />
+                            )}
                             {formData.eventDate ? (
                               <span>
                                 {formData.eventDate.toLocaleDateString(
@@ -334,7 +388,9 @@ ${formData.message.trim()}`;
                                 htmlFor="eventTime"
                                 className="mb-2 flex items-center gap-2"
                               >
-                                <Clock className="h-4 w-4 text-muted-foreground" />
+                                {Clock && (
+                                  <Clock className="h-4 w-4 text-muted-foreground" />
+                                )}
                                 Hora del evento
                               </Label>
                               <Input
@@ -360,7 +416,7 @@ ${formData.message.trim()}`;
                         variant="outline"
                         className="w-full justify-start text-left font-normal text-muted-foreground hover:bg-background hover:text-muted-foreground/90"
                       >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        <span className="mr-2 h-4 w-4 inline-block" />
                         Selecciona fecha y hora
                       </Button>
                     )}
