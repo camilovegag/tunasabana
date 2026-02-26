@@ -4,7 +4,11 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Footer from "@/components/footer";
-import { GoogleTagManager, GoogleTagManagerNoscript } from "@/components/gtm";
+import {
+  GoogleAdsTag,
+  GoogleTagManager,
+  GoogleTagManagerNoscript,
+} from "@/components/gtm";
 import Header from "@/components/header";
 import StructuredData from "@/components/structured-data";
 import WhatsappButton from "@/components/whatsapp-button";
@@ -66,6 +70,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <GoogleTagManager />
+      <GoogleAdsTag />
       <body
         className={`${geistSans.variable} ${playfairDisplay.variable} antialiased`}
       >
