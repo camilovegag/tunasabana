@@ -9,28 +9,32 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { siteConfig } from "@/config/site";
 
 const heroImages = [
   {
     src: "/walk.jpg",
     alt: "Tuna Universidad de La Sabana caminando en la Universidad",
+    priority: true,
   },
   {
     src: "/hero.jpg",
     alt: "Integrantes de la Tuna Universidad de La Sabana",
+    priority: false,
   },
   {
     src: "/gallery.jpg",
     alt: "Tuna Universidad de La Sabana en su festival 2025",
+    priority: false,
   },
   {
     src: "/music.jpg",
     alt: "Tuna Universidad de La Sabana cantando en tarima",
+    priority: false,
   },
   {
     src: "/pandereta.jpg",
     alt: "Show de panderetas de la Tuna Universidad de La Sabana",
+    priority: false,
   },
 ];
 
@@ -64,7 +68,7 @@ export default function Hero() {
                     src={image.src}
                     alt={image.alt}
                     fill
-                    priority
+                    priority={image.priority}
                     className="object-cover"
                     quality={90}
                     sizes="100vw"
@@ -82,11 +86,11 @@ export default function Hero() {
         <div className="max-w-4xl mx-auto text-center space-y-8 text-primary-foreground">
           <div className="space-y-4">
             <h1 className="text-5xl lg:text-7xl font-serif font-bold text-balance leading-tight drop-shadow-lg">
-              {siteConfig.name}
+              Serenatas inolvidables en Bogotá y la Sabana
             </h1>
             <p className="text-base sm:text-lg text-primary-foreground/90 drop-shadow-md max-w-2xl mx-auto">
-              Desde 1999, llevamos alegría y amor por la música a bodas, grados,
-              cumpleaños y eventos especiales.
+              Más de 25 años creando momentos especiales en cumpleaños,
+              aniversarios, bodas y eventos empresariales.
             </p>
           </div>
 
@@ -94,7 +98,7 @@ export default function Hero() {
             href="/contacto"
             className="inline-flex items-center justify-center gap-2 rounded-md bg-accent text-accent-foreground px-8 py-3 text-base font-semibold hover:bg-secondary transition-colors shadow-lg"
           >
-            ¡Contáctanos!
+            ¡Cotiza tu serenata!
           </Link>
         </div>
       </div>

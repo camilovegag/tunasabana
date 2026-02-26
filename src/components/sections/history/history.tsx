@@ -3,33 +3,69 @@ import SectionHeader from "@/components/section-header";
 const timeline = [
   {
     year: "1999",
-    title: "Fundación",
+    title: "Nuestra Fundación",
     description:
       "El Dr. Adalberto Amaya Afanador funda la Tuna junto con un grupo de estudiantes y profesores apasionados por la música.",
   },
   {
-    year: "2000-2005",
-    title: "Primeros Reconocimientos",
+    year: "2001",
+    title: "Primer viaje nacional",
     description:
-      "La Tuna comienza a destacarse en festivales nacionales, ganando premios por su calidad musical y carisma.",
+      "Realizamos nuestro primer gran viaje nacional participando en la emblemática Feria de Manizales.",
   },
   {
-    year: "2006-2015",
-    title: "Proyección Internacional",
+    year: "2002",
+    title: "Apadrinamiento",
     description:
-      "Participación en festivales internacionales y giras por Latinoamérica, representando a Colombia con orgullo.",
+      "La Tuna es apadrinada por la Tuna Javeriana, quienes nos entregan la Beca como símbolo de reconocimiento a nuestro esfuerzo y hermandad.",
   },
   {
-    year: "2019",
-    title: "Primer Álbum",
+    year: "2003",
+    title: "Suramérica",
     description:
-      "Lanzamiento del primer álbum en Spotify, preservando las canciones de nuestros fundadores.",
+      "Nuestro primer viaje internacional. Participación destacada en el Festival de Tunas Universitarias de Concepción, Chile.",
+  },
+  {
+    year: "2008",
+    title: "Gran Gira Europea",
+    description:
+      "Gira con paso por Caracas, París, Madrid, Murcia y Toledo. Premio Internacional a Mejor Pasacalle en el Festival Costa Cálida de Murcia, España.",
+  },
+  {
+    year: "2014",
+    title: "Gira por México",
+    description:
+      "Viaje internacional con participación en certámenes en Aguascalientes y Monterrey, donde trajimos a casa el Premio a Mejor Pasacalles.",
+  },
+  {
+    year: "2018-2021",
+    title: "Música, Perú y Resiliencia",
+    description:
+      "Premio Mejor Solista en Duitama (2018). Gira por el BITUP en Perú (2019). Pese a la pandemia seguimos creciendo y ganamos virtualmente Mejor Tuna en Perú (2021).",
+  },
+  {
+    year: "2023",
+    title: "A Triunfar en España",
+    description:
+      "Nueva gira por Murcia y Granada. En el prestigioso Certamen Costa Cálida obtuvimos 3° Mejor Tuna, Mejor Show de Pandereta y el anhelado premio a Tuna Simpatía.",
   },
   {
     year: "2024",
-    title: "Presente",
+    title: "Recorriendo el país",
     description:
-      "Más de 25 años de trayectoria, siendo líderes en serenatas universitarias en Colombia.",
+      "Destacamos como Mejor Tuna en Bucaramanga, 2° Mejor Tuna en Cartagena de Indias y múltiples galardones (Capa y Panderetas) a nivel nacional (CETUMNG).",
+  },
+  {
+    year: "2025",
+    title: "Nivel de Excelencia",
+    description:
+      "Consolidación nacional con premios a 2° Mejor Tuna en el VIII CETUMNG (y Mejores Capas y Panderetas) junto a victorias en el Certamen de la U. Nacional.",
+  },
+  {
+    year: "2026",
+    title: "El Legado Continúa",
+    description:
+      "Hoy, con más de 26 años ininterrumpidos de trayectoria, seguimos vistiendo nuestras becas con orgullo, cantando con el corazón y acompañando las mejores serenatas de Colombia.",
   },
 ];
 
