@@ -1,7 +1,6 @@
 "use client";
 
 import { CalendarIcon, Clock, Mail, MapPin, Phone, Send } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import type React from "react";
 import { useEffect, useState } from "react";
@@ -45,6 +44,7 @@ export default function Contact() {
     name: "",
     email: "",
     phone: "",
+    location: "",
     eventType: "",
     eventDate: undefined as Date | undefined,
     eventTime: "",
@@ -75,17 +75,18 @@ export default function Contact() {
 
     const message = `¡Hola Tuna Sabana! 🎶
 
-Me gustaría recibir una cotización para un evento tipo *${eventTypeLabel}*.
+Me gustaría recibir una cotización para un evento tipo *${eventTypeLabel.trim()}*.
 
-📅 *Fecha del evento:* ${dateStr}
-🕐 *Hora tentativa:* ${timeStr}
+📅 *Fecha del evento:* ${dateStr.trim()}
+🕐 *Hora tentativa:* ${timeStr.trim()}
+📍 *Ubicación de la serenata:* ${formData.location?.trim() || "Por definir"}
 
-Soy *${formData.name}* y mis datos de contacto son:
-📞 ${formData.phone}
-📧 ${formData.email}
+Soy *${formData.name.trim()}* y mis datos de contacto son:
+📞 ${formData.phone.trim()}
+📧 ${formData.email.trim()}
 
 📝 *Detalles del evento:*
-${formData.message}`;
+${formData.message.trim()}`;
 
     const phoneNumber = siteConfig.contact.phone.replace(/\D/g, "");
     const whatsappUrl = `https://api.whatsapp.com/send/?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
@@ -166,18 +167,12 @@ ${formData.message}`;
 
             <div className="space-y-8">
               <Link
-                href={`https://wa.me/${siteConfig.contact.phoneClean}?text=Hola,%20quiero%20cotizar%20una%20serenata`}
+                href={siteConfig.links.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex justify-center items-center gap-2 rounded-md bg-[#40C351] text-white px-8 py-4 text-lg font-semibold hover:bg-[#20bd5a] transition-colors shadow-lg text-center"
+                className="w-full inline-flex justify-center items-center gap-2 rounded-md bg-accent hover:bg-secondary text-white px-8 py-4 text-lg font-semibold transition-colors shadow-lg text-center"
               >
-                Escríbenos directamente por WhatsApp
-                <Image
-                  src="/icons/whatsapp.svg"
-                  alt="Whatsapp icon"
-                  height={24}
-                  width={24}
-                />
+                Escríbenos por WhatsApp
               </Link>
 
               <div className="relative">
@@ -202,7 +197,7 @@ ${formData.message}`;
                       name="name"
                       type="text"
                       required
-                      value={formData.name}
+                      value={formData.name || ""}
                       onChange={handleChange}
                       placeholder="Tu nombre"
                     />
@@ -217,7 +212,7 @@ ${formData.message}`;
                       name="email"
                       type="email"
                       required
-                      value={formData.email}
+                      value={formData.email || ""}
                       onChange={handleChange}
                       placeholder="tu@email.com"
                     />
@@ -232,7 +227,7 @@ ${formData.message}`;
                       name="phone"
                       type="tel"
                       required
-                      value={formData.phone}
+                      value={formData.phone || ""}
                       onChange={handleChange}
                       placeholder="+57 300 123 4567"
                     />
@@ -284,7 +279,7 @@ ${formData.message}`;
                             type="button"
                             variant="outline"
                             className={cn(
-                              "w-full justify-start text-left font-normal",
+                              "w-full justify-start text-left font-normal hover:bg-background hover:text-foreground/90",
                               !formData.eventDate && "text-muted-foreground",
                             )}
                           >
@@ -351,12 +346,27 @@ ${formData.message}`;
                         id="eventDatePicker"
                         type="button"
                         variant="outline"
-                        className="w-full justify-start text-left font-normal text-muted-foreground"
+                        className="w-full justify-start text-left font-normal text-muted-foreground hover:bg-background hover:text-muted-foreground/90"
                       >
                         <CalendarIcon className="mr-2 h-4 w-4" />
                         Selecciona fecha y hora
                       </Button>
                     )}
+                  </div>
+
+                  {/* Location */}
+                  <div>
+                    <Label htmlFor="location" className="mb-2 block">
+                      Ubicación de la serenata (opcional)
+                    </Label>
+                    <Input
+                      id="location"
+                      name="location"
+                      type="text"
+                      value={formData.location || ""}
+                      onChange={handleChange}
+                      placeholder="Dirección"
+                    />
                   </div>
 
                   <div>
@@ -367,7 +377,7 @@ ${formData.message}`;
                       id="message"
                       name="message"
                       required
-                      value={formData.message}
+                      value={formData.message || ""}
                       onChange={handleChange}
                       placeholder="Cuéntanos sobre tu evento: lugar, cantidad de personas, canciones especiales..."
                       rows={4}
@@ -377,7 +387,7 @@ ${formData.message}`;
 
                   <Button
                     type="submit"
-                    className="w-full font-semibold bg-accent text-accent-foreground hover:bg-accent/90"
+                    className="w-full font-semibold bg-accent text-accent-foreground hover:bg-secondary"
                   >
                     <Send className="mr-2 h-4 w-4" />
                     Enviar por WhatsApp
