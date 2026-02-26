@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { siteConfig } from "@/config/site";
+import { trackEvent } from "@/lib/tracking";
 import { cn } from "@/lib/utils";
 
 const eventTypes = [
@@ -90,6 +91,12 @@ ${formData.message.trim()}`;
 
     const phoneNumber = siteConfig.contact.phone.replace(/\D/g, "");
     const whatsappUrl = `https://api.whatsapp.com/send/?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+
+    trackEvent("whatsapp_click", {
+      method: "contact_form",
+      event_type: eventTypeLabel,
+    });
+
     window.open(whatsappUrl, "_blank");
   };
 
@@ -171,6 +178,11 @@ ${formData.message.trim()}`;
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full inline-flex justify-center items-center gap-2 rounded-md bg-accent hover:bg-secondary text-white px-8 py-4 text-lg font-semibold transition-colors shadow-lg text-center"
+                onClick={() =>
+                  trackEvent("whatsapp_click", {
+                    method: "contact_direct_button",
+                  })
+                }
               >
                 Escríbenos por WhatsApp
               </Link>
