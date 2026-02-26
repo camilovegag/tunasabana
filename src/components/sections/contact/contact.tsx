@@ -1,11 +1,15 @@
 "use client";
 
 import { CalendarIcon, Clock, Mail, MapPin, Phone, Send } from "lucide-react";
+import Link from "next/link";
 import type React from "react";
 import { useEffect, useState } from "react";
 import ContactInfoCard from "@/components/contact-info-card";
 import SectionHeader from "@/components/section-header";
+import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Popover,
   PopoverContent,
@@ -19,7 +23,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { siteConfig } from "@/config/site";
+import { trackEvent } from "@/lib/tracking";
 import { cn } from "@/lib/utils";
 
 const eventTypes = [
@@ -39,6 +45,7 @@ export default function Contact() {
     name: "",
     email: "",
     phone: "",
+    location: "",
     eventType: "",
     eventDate: undefined as Date | undefined,
     eventTime: "",
@@ -69,20 +76,27 @@ export default function Contact() {
 
     const message = `¡Hola Tuna Sabana! 🎶
 
-Me gustaría recibir una cotización para un evento tipo *${eventTypeLabel}*.
+Me gustaría recibir una cotización para un evento tipo *${eventTypeLabel.trim()}*.
 
-📅 *Fecha del evento:* ${dateStr}
-🕐 *Hora tentativa:* ${timeStr}
+📅 *Fecha del evento:* ${dateStr.trim()}
+🕐 *Hora tentativa:* ${timeStr.trim()}
+📍 *Ubicación de la serenata:* ${formData.location?.trim() || "Por definir"}
 
-Soy *${formData.name}* y mis datos de contacto son:
-📞 ${formData.phone}
-📧 ${formData.email}
+Soy *${formData.name.trim()}* y mis datos de contacto son:
+📞 ${formData.phone.trim()}
+📧 ${formData.email.trim()}
 
 📝 *Detalles del evento:*
-${formData.message}`;
+${formData.message.trim()}`;
 
     const phoneNumber = siteConfig.contact.phone.replace(/\D/g, "");
     const whatsappUrl = `https://api.whatsapp.com/send/?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+
+    trackEvent("whatsapp_click", {
+      method: "contact_form",
+      event_type: eventTypeLabel,
+    });
+
     window.open(whatsappUrl, "_blank");
   };
 
@@ -112,21 +126,21 @@ ${formData.message}`;
               </h3>
               <div className="space-y-4">
                 <ContactInfoCard icon={Phone} title="Teléfono / WhatsApp">
-                  <a
+                  <Link
                     href={`tel:${siteConfig.contact.phone}`}
                     className="hover:text-accent transition-colors"
                   >
                     {siteConfig.contact.phone}
-                  </a>
+                  </Link>
                 </ContactInfoCard>
 
                 <ContactInfoCard icon={Mail} title="Correo Electrónico">
-                  <a
+                  <Link
                     href={`mailto:${siteConfig.contact.email}`}
                     className="hover:text-accent transition-colors"
                   >
                     {siteConfig.contact.email}
-                  </a>
+                  </Link>
                 </ContactInfoCard>
 
                 <ContactInfoCard icon={MapPin} title="Ubicación">
@@ -141,7 +155,7 @@ ${formData.message}`;
 
             <div className="bg-accent/10 p-6 rounded-lg">
               <h4 className="font-semibold text-foreground mb-3">
-                ¿Por qué elegirnos?
+                Lo que hace única nuestra serenata
               </h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>✓ Más de 25 años de experiencia</li>
@@ -157,219 +171,245 @@ ${formData.message}`;
             <h3 className="text-xl sm:text-2xl font-sans font-bold text-foreground mb-6">
               Solicita tu Cotización
             </h3>
-            <div className="bg-card p-6 sm:p-8 rounded-lg border border-border">
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-foreground mb-2"
-                  >
-                    Nombre Completo <span className="text-accent">*</span>
-                  </label>
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Tu nombre"
-                    className="w-full rounded-md border border-border bg-background px-4 py-2 text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
-                  />
-                </div>
 
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-foreground mb-2"
-                  >
-                    Correo Electrónico <span className="text-accent">*</span>
-                  </label>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="tu@email.com"
-                    className="w-full rounded-md border border-border bg-background px-4 py-2 text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
-                  />
-                </div>
+            <div className="space-y-8">
+              <Link
+                href={siteConfig.links.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full inline-flex justify-center items-center gap-2 rounded-md bg-accent hover:bg-secondary text-white px-8 py-4 text-lg font-semibold transition-colors shadow-lg text-center"
+                onClick={() =>
+                  trackEvent("whatsapp_click", {
+                    method: "contact_direct_button",
+                  })
+                }
+              >
+                Escríbenos por WhatsApp
+              </Link>
 
-                <div>
-                  <label
-                    htmlFor="phone"
-                    className="block text-sm font-medium text-foreground mb-2"
-                  >
-                    Teléfono / WhatsApp <span className="text-accent">*</span>
-                  </label>
-                  <input
-                    id="phone"
-                    name="phone"
-                    type="tel"
-                    required
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="+57 300 123 4567"
-                    className="w-full rounded-md border border-border bg-background px-4 py-2 text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
-                  />
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t border-border" />
                 </div>
+                <div className="relative flex justify-center text-xs">
+                  <span className="bg-background px-2 text-muted-foreground text-center">
+                    O también puedes dejarnos un mensaje aquí
+                  </span>
+                </div>
+              </div>
 
-                {/* Event Type Select */}
-                <div>
-                  <label
-                    htmlFor="eventType"
-                    className="block text-sm font-medium text-foreground mb-2"
-                  >
-                    Tipo de Evento <span className="text-accent">*</span>
-                  </label>
-                  {hasMounted ? (
-                    <Select
+              <div className="bg-card p-6 sm:p-8 rounded-lg border border-border">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <Label htmlFor="name" className="mb-2 block">
+                      Nombre Completo <span className="text-accent">*</span>
+                    </Label>
+                    <Input
+                      id="name"
+                      name="name"
+                      type="text"
                       required
-                      value={formData.eventType}
-                      onValueChange={(value) =>
-                        setFormData((prev) => ({ ...prev, eventType: value }))
-                      }
-                    >
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Selecciona el tipo de evento" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          {eventTypes.map((type) => (
-                            <SelectItem key={type.value} value={type.value}>
-                              {type.label}
-                            </SelectItem>
-                          ))}
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  ) : (
-                    <div className="w-full rounded-md border border-border bg-background px-4 py-2 text-muted-foreground">
-                      Selecciona el tipo de evento
-                    </div>
-                  )}
-                </div>
+                      value={formData.name || ""}
+                      onChange={handleChange}
+                      placeholder="Tu nombre"
+                    />
+                  </div>
 
-                {/* Date and Time Picker */}
-                <div>
-                  <label
-                    htmlFor="eventDatePicker"
-                    className="block text-sm font-medium text-foreground mb-2"
-                  >
-                    Fecha y Hora del Evento (opcional)
-                  </label>
-                  {hasMounted ? (
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <button
-                          id="eventDatePicker"
-                          type="button"
-                          className={cn(
-                            "w-full flex items-center justify-start gap-2 rounded-md border border-border bg-background px-4 py-2 text-left font-normal transition-colors hover:bg-muted/50",
-                            !formData.eventDate && "text-muted-foreground",
-                          )}
-                        >
-                          <CalendarIcon className="h-4 w-4" />
-                          {formData.eventDate ? (
-                            <span>
-                              {formData.eventDate.toLocaleDateString("es-CO", {
-                                weekday: "short",
-                                year: "numeric",
-                                month: "short",
-                                day: "numeric",
-                              })}
-                              {formData.eventTime &&
-                                ` a las ${formData.eventTime}`}
-                            </span>
-                          ) : (
-                            "Selecciona fecha y hora"
-                          )}
-                        </button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <div className="flex flex-col">
-                          <Calendar
-                            mode="single"
-                            selected={formData.eventDate}
-                            onSelect={(date) =>
-                              setFormData((prev) => ({
-                                ...prev,
-                                eventDate: date,
-                              }))
-                            }
-                            disabled={(date) => date < new Date()}
-                            className="rounded-t-md border-b-0"
-                          />
-                          <div className="border-t bg-muted/50 p-3 rounded-b-md">
-                            <label
-                              htmlFor="eventTime"
-                              className="flex items-center gap-2 text-sm font-medium text-foreground"
-                            >
-                              <Clock className="h-4 w-4 text-muted-foreground" />
-                              Hora del evento
-                            </label>
-                            <input
-                              id="eventTime"
-                              type="time"
-                              value={formData.eventTime || ""}
-                              onChange={(e) =>
+                  <div>
+                    <Label htmlFor="email" className="mb-2 block">
+                      Correo Electrónico <span className="text-accent">*</span>
+                    </Label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      required
+                      value={formData.email || ""}
+                      onChange={handleChange}
+                      placeholder="tu@email.com"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="phone" className="mb-2 block">
+                      Teléfono / WhatsApp <span className="text-accent">*</span>
+                    </Label>
+                    <Input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      required
+                      value={formData.phone || ""}
+                      onChange={handleChange}
+                      placeholder="+57 300 123 4567"
+                    />
+                  </div>
+
+                  {/* Event Type Select */}
+                  <div>
+                    <Label htmlFor="eventType" className="mb-2 block">
+                      Tipo de Evento <span className="text-accent">*</span>
+                    </Label>
+                    {hasMounted ? (
+                      <Select
+                        required
+                        value={formData.eventType}
+                        onValueChange={(value) =>
+                          setFormData((prev) => ({ ...prev, eventType: value }))
+                        }
+                      >
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Selecciona el tipo de evento" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            {eventTypes.map((type) => (
+                              <SelectItem key={type.value} value={type.value}>
+                                {type.label}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <div className="w-full rounded-md border border-border bg-background px-4 py-2 text-muted-foreground">
+                        Selecciona el tipo de evento
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Date and Time Picker */}
+                  <div>
+                    <Label htmlFor="eventDatePicker" className="mb-2 block">
+                      Fecha y Hora del Evento (opcional)
+                    </Label>
+                    {hasMounted ? (
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            id="eventDatePicker"
+                            type="button"
+                            variant="outline"
+                            className={cn(
+                              "w-full justify-start text-left font-normal hover:bg-background hover:text-foreground/90",
+                              !formData.eventDate && "text-muted-foreground",
+                            )}
+                          >
+                            <CalendarIcon className="mr-2 h-4 w-4" />
+                            {formData.eventDate ? (
+                              <span>
+                                {formData.eventDate.toLocaleDateString(
+                                  "es-CO",
+                                  {
+                                    weekday: "short",
+                                    year: "numeric",
+                                    month: "short",
+                                    day: "numeric",
+                                  },
+                                )}
+                                {formData.eventTime &&
+                                  ` a las ${formData.eventTime}`}
+                              </span>
+                            ) : (
+                              "Selecciona fecha y hora"
+                            )}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <div className="flex flex-col">
+                            <Calendar
+                              mode="single"
+                              selected={formData.eventDate}
+                              onSelect={(date) =>
                                 setFormData((prev) => ({
                                   ...prev,
-                                  eventTime: e.target.value,
+                                  eventDate: date,
                                 }))
                               }
-                              className="mt-2 w-[224px] rounded-md border border-border bg-background px-3 py-2 text-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+                              disabled={(date) => date < new Date()}
+                              className="rounded-t-md border-b-0"
                             />
+                            <div className="border-t bg-muted/50 p-3 rounded-b-md">
+                              <Label
+                                htmlFor="eventTime"
+                                className="mb-2 flex items-center gap-2"
+                              >
+                                <Clock className="h-4 w-4 text-muted-foreground" />
+                                Hora del evento
+                              </Label>
+                              <Input
+                                id="eventTime"
+                                type="time"
+                                value={formData.eventTime || ""}
+                                onChange={(e) =>
+                                  setFormData((prev) => ({
+                                    ...prev,
+                                    eventTime: e.target.value,
+                                  }))
+                                }
+                                className="w-[224px]"
+                              />
+                            </div>
                           </div>
-                        </div>
-                      </PopoverContent>
-                    </Popover>
-                  ) : (
-                    <button
-                      id="eventDatePicker"
-                      type="button"
-                      className="w-full flex items-center justify-start gap-2 rounded-md border border-border bg-background px-4 py-2 text-left font-normal text-muted-foreground"
-                    >
-                      <CalendarIcon className="h-4 w-4" />
-                      Selecciona fecha y hora
-                    </button>
-                  )}
-                </div>
+                        </PopoverContent>
+                      </Popover>
+                    ) : (
+                      <Button
+                        id="eventDatePicker"
+                        type="button"
+                        variant="outline"
+                        className="w-full justify-start text-left font-normal text-muted-foreground hover:bg-background hover:text-muted-foreground/90"
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        Selecciona fecha y hora
+                      </Button>
+                    )}
+                  </div>
 
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-sm font-medium text-foreground mb-2"
+                  {/* Location */}
+                  <div>
+                    <Label htmlFor="location" className="mb-2 block">
+                      Ubicación de la serenata (opcional)
+                    </Label>
+                    <Input
+                      id="location"
+                      name="location"
+                      type="text"
+                      value={formData.location || ""}
+                      onChange={handleChange}
+                      placeholder="Dirección"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="message" className="mb-2 block">
+                      Mensaje <span className="text-accent">*</span>
+                    </Label>
+                    <Textarea
+                      id="message"
+                      name="message"
+                      required
+                      value={formData.message || ""}
+                      onChange={handleChange}
+                      placeholder="Cuéntanos sobre tu evento: lugar, cantidad de personas, canciones especiales..."
+                      rows={4}
+                      className="resize-none"
+                    />
+                  </div>
+
+                  <Button
+                    type="submit"
+                    className="w-full font-semibold bg-accent text-accent-foreground hover:bg-secondary"
                   >
-                    Mensaje <span className="text-accent">*</span>
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    required
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="Cuéntanos sobre tu evento: lugar, cantidad de personas, canciones especiales..."
-                    rows={4}
-                    className="w-full rounded-md border border-border bg-background px-4 py-2 text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent resize-none"
-                  />
-                </div>
+                    <Send className="mr-2 h-4 w-4" />
+                    Enviar por WhatsApp
+                  </Button>
 
-                <button
-                  type="submit"
-                  className="w-full inline-flex items-center justify-center gap-2 rounded-md bg-accent text-accent-foreground px-6 py-3 text-sm font-medium hover:bg-accent/90 transition-colors"
-                >
-                  <Send className="w-4 h-4" />
-                  Enviar por WhatsApp
-                </button>
-
-                <p className="text-xs text-muted-foreground text-center">
-                  Al enviar, serás redirigido a WhatsApp para completar tu
-                  solicitud
-                </p>
-              </form>
+                  <p className="text-xs text-muted-foreground text-center">
+                    Te responderemos en minutos.
+                  </p>
+                </form>
+              </div>
             </div>
           </div>
         </div>

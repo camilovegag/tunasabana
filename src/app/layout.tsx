@@ -4,8 +4,10 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Footer from "@/components/footer";
+import { GoogleTagManager, GoogleTagManagerNoscript } from "@/components/gtm";
 import Header from "@/components/header";
 import StructuredData from "@/components/structured-data";
+import WhatsappButton from "@/components/whatsapp-button";
 import { siteConfig } from "@/config/site";
 
 const playfairDisplay = Playfair_Display({
@@ -63,13 +65,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
+      <GoogleTagManager />
       <body
         className={`${geistSans.variable} ${playfairDisplay.variable} antialiased`}
       >
+        <GoogleTagManagerNoscript />
         <StructuredData />
         <Header />
         <main>{children}</main>
         <Footer />
+        <WhatsappButton />
         <Analytics />
         <SpeedInsights />
       </body>

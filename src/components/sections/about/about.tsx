@@ -7,7 +7,7 @@ const values = [
     icon: Music,
     title: "Calidad Musical",
     description:
-      "Músicos empíricos con años de experiencia y dedicación a la música tradicional española",
+      "Músicos empíricos con años de experiencia y dedicación a la música tradicional española y latinoamericana",
   },
   {
     icon: Heart,
